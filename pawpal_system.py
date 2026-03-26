@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List
 
 
-# -------- Task --------
+# Task
 @dataclass
 class Task:
     title: str
@@ -10,7 +10,7 @@ class Task:
     priority: str  # "low", "medium", "high"
 
 
-# -------- Pet --------
+# Pet
 @dataclass
 class Pet:
     name: str
@@ -28,7 +28,7 @@ class Pet:
         return self.tasks
 
 
-# -------- Owner --------
+# Owner
 @dataclass
 class Owner:
     name: str
@@ -45,7 +45,7 @@ class Owner:
         return self.pets
 
 
-# -------- Scheduler --------
+# Scheduler
 class Scheduler:
     def __init__(self):
         self.schedule: List[Task] = []
