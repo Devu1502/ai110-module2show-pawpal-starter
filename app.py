@@ -99,15 +99,60 @@ st.subheader("Build Schedule")
 st.caption("This button should call your scheduling logic once you implement it.")
 
 if st.button("Generate schedule"):
-    st.warning(
-        "Not implemented yet. Next step: create your scheduling logic (classes/functions) and call it here."
-    )
-    st.markdown(
-        """
-Suggested approach:
-1. Design your UML (draft).
-2. Create class stubs (no logic).
-3. Implement scheduling behavior.
-4. Connect your scheduler here and display results.
-"""
-    )
+    if not owner.get_pets():
+        st.warning("Please add at least one pet.")
+    elif not st.session_state.tasks:
+        st.warning("Please add at least one task.")
+    else:
+        scheduler = Scheduler()
+
+        # Use first pet for simplicity
+        pet = owner.get_pets()[0]
+
+        # Convert UI tasks → Task objects
+        for t in st.session_state.tasks:
+            task_obj = Task(
+                title=t["title"],
+                duration_minutes=t["duration_minutes"],
+                priority=t["priority"],
+                time="09:00",   # default time (since UI doesn’t collect time yet)
+                pet=pet,
+                recurrence="daily"  # demo recurring
+            )
+            scheduler.add_task(task_obj)
+
+        # ✅ SORT
+        sorted_tasks = scheduler.sort_by_time()
+
+        st.subheader("📅 Sorted Schedule")
+        for task in sorted_tasks:
+            st.write(f"{task.title} - {task.time} ({task.priority})")
+
+        # ✅ FILTER (example: show only pending)
+        filtered = scheduler.filter_tasks(completed=False)
+
+        st.subheader("🔍 Pending Tasks")
+        for task in filtered:
+            st.write(f"{task.title} - {task.time}")
+
+        # ✅ MARK ONE COMPLETE (demo recurrence)
+        if sorted_tasks:
+            scheduler.mark_task_complete(sorted_tasks[0])
+
+        st.subheader("🔁 After Recurring Update")
+        for task in scheduler.get_schedule():
+            status = "✅" if task.completed else "⏳"
+            st.write(f"{task.title} - {task.time} {status}")
+
+        # ✅ CONFLICT DETECTION (force conflict for demo)
+        if len(scheduler.get_schedule()) >= 2:
+            scheduler.schedule[1].time = scheduler.schedule[0].time
+
+        conflicts = scheduler.detect_conflicts()
+
+        st.subheader("⚠️ Conflict Detection")
+        if conflicts:
+            for c in conflicts:
+                st.warning(c)
+        else:
+            st.success("No conflicts found.")

@@ -1,47 +1,57 @@
 from pawpal_system import Task, Pet, Owner, Scheduler
 
-
 def main():
-    # Create Owner
-    owner = Owner("Sree")
+    """Run a demo of the PawPal scheduling system with sample pets and tasks."""
+    owner = Owner("Dev")
 
-    # Create Pets
-    dog = Pet("Leo", "Dog")
-    cat = Pet("Milo", "Cat")
+    dog = Pet("Blu", "Dog")
+    cat = Pet("Kiko", "Cat")
 
-    # Add pets to owner
     owner.add_pet(dog)
     owner.add_pet(cat)
 
-    # Create Tasks
-    task1 = Task("Morning Walk", 30, "high")
-    task2 = Task("Feed Breakfast", 10, "medium")
-    task3 = Task("Vet Appointment", 60, "high")
-
-    # Assign tasks to pets
-    dog.add_task(task1)
-    dog.add_task(task2)
-    cat.add_task(task3)
-
-    # Create Scheduler
     scheduler = Scheduler()
 
-    # Add all tasks to scheduler
-    for pet in owner.get_pets():
-        for task in pet.get_tasks():
-            scheduler.add_task(task)
+    # Create Tasks (OUT OF ORDER)
+    task1 = Task("Morning Walk", 30, "high", "12:00", dog, recurrence="daily")
+    task2 = Task("Feed Breakfast", 10, "medium", "09:00", dog)
+    task3 = Task("Vet Appointment", 60, "high", "15:00", cat)
+    task4 = Task("Evening Walk", 20, "medium", "12:00", dog)
 
-    # Sort tasks
-    sorted_tasks = scheduler.sort_by_priority()
+    scheduler.add_task(task1)
+    scheduler.add_task(task2)
+    scheduler.add_task(task3)
+    scheduler.add_task(task4)
 
-    # Print Schedule (clean format)
-    print("\nToday's Schedule \n")
+    # ✅ SORT
+    print("\nSorted by Time:\n")
+    sorted_tasks = scheduler.sort_by_time()
+    for task in sorted_tasks:
+        print(f"{task.title} - {task.time}")
 
-    for i, task in enumerate(sorted_tasks, start=1):
-        print(f"{i}. {task.title}")
-        print(f"   Duration: {task.duration_minutes} mins")
-        print(f"   Priority: {task.priority.capitalize()}")
-        print("-" * 30)
+    # ✅ FILTER BY PET
+    print("\nTasks for Blu:\n")
+    dog_tasks = scheduler.filter_tasks(pet_name="Blu")
+    for task in dog_tasks:
+        print(f"{task.title} - {task.time}")
+
+    # ✅ RECURRING TASK TEST
+    scheduler.mark_task_complete(task1)
+
+    print("\nAfter Completing Recurring Task:\n")
+    for task in scheduler.get_schedule():
+        status = "Completed" if task.completed else "Pending"
+        print(f"{task.title} - {task.time} ({status})")
+
+    # ✅ CONFLICT DETECTION
+    print("\nChecking for Conflicts:\n")
+    conflicts = scheduler.detect_conflicts()
+
+    if conflicts:
+        for c in conflicts:
+            print(c)
+    else:
+        print("No conflicts found.")
 
 
 if __name__ == "__main__":

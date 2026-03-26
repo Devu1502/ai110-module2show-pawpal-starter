@@ -42,7 +42,18 @@ pip install -r requirements.txt
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
 
-### UML Diagram
+## Smarter Scheduling
+
+In Phase 4, I improved the PawPal+ system by adding simple algorithms to make it more intelligent and useful.
+
+- Tasks can now be sorted by time so the schedule is in the correct order.
+- Tasks can be filtered by pet or completion status to make it easier to manage.
+- Recurring tasks (daily or weekly) are automatically added again when completed.
+- The system can detect conflicts when two tasks are scheduled at the same time and shows a warning.
+
+These improvements make the scheduler more realistic and helpful for managing pet care tasks.
+
+## UML Diagram
 
 ```mermaid
 classDiagram
@@ -67,15 +78,21 @@ classDiagram
         +String title
         +int duration_minutes
         +String priority
+        +String time
         +bool completed
+        +String recurrence
         +mark_complete()
     }
 
     class Scheduler {
         +List~Task~ schedule
         +add_task(task: Task)
-        +sort_by_priority() List~Task~
         +get_schedule() List~Task~
+        +sort_by_time() List~Task~
+        +sort_by_priority() List~Task~
+        +filter_tasks() List~Task~
+        +mark_task_complete(task: Task)
+        +detect_conflicts() List~String~
     }
 
     Owner "1" --> "0..*" Pet : owns
