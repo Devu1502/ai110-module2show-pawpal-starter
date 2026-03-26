@@ -4,8 +4,16 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+The three core actions a user should be able to perform are:
+1. Add and manage pets in the system.
+2. Create and manage pet care tasks such as feeding, walking, and medication.
+3. Generate and view a daily schedule based on task priority and duration.
+
+The system has four main classes:
+1. Owner – stores information about the user and manages their pets.
+2. Pet – represents a pet and stores its care tasks.
+3. Task – represents an activity such as feeding, walking.
+4. Scheduler – organizes tasks into a daily schedule based on priority and constraints.
 
 **b. Design changes**
 
@@ -69,3 +77,4 @@
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+
