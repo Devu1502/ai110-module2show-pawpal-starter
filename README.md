@@ -66,7 +66,9 @@ classDiagram
     class Task {
         +String title
         +int duration_minutes
-        +int priority
+        +String priority
+        +bool completed
+        +mark_complete()
     }
 
     class Scheduler {
