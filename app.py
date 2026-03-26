@@ -1,4 +1,29 @@
 import streamlit as st
+from pawpal_system import Task, Pet, Owner, Scheduler
+
+if "owner" not in st.session_state:
+    st.session_state.owner = Owner("Dev")
+owner = st.session_state.owner
+
+st.write("Number of pets:", len(owner.get_pets()))
+
+st.subheader("➕ Add a Pet")
+
+pet_name = st.text_input("Pet Name")
+pet_species = st.text_input("Pet Species")
+
+if st.button("Add Pet"):
+    if pet_name and pet_species:
+        new_pet = Pet(pet_name, pet_species)
+        owner.add_pet(new_pet)
+        st.success(f"{pet_name} added successfully!")
+    else:
+        st.warning("Please enter both name and species.")
+
+st.subheader("🐾 Your Pets")
+
+for pet in owner.get_pets():
+    st.write(f"- {pet.name} ({pet.species})")
 
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 

@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
 
-
 # Task
 @dataclass
 class Task:
@@ -46,7 +45,7 @@ class Owner:
         self.pets.append(pet)
 
     def remove_pet(self, pet: Pet):
-         """Remove a pet from the owner if it exists."""
+        """Remove a pet from the owner if it exists."""
         if pet in self.pets:
             self.pets.remove(pet)
 
