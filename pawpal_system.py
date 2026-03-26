@@ -7,8 +7,11 @@ from typing import List
 class Task:
     title: str
     duration_minutes: int
-    priority: str  # "low", "medium", "high"
+    priority: str
+    completed: bool = False
 
+    def mark_complete(self):
+        self.completed = True
 
 # Pet
 @dataclass
