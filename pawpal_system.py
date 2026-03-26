@@ -18,13 +18,14 @@ class Pet:
     tasks: List[Task] = field(default_factory=list)
 
     def add_task(self, task: Task):
-        pass
+        self.tasks.append(task)
 
     def remove_task(self, task: Task):
-        pass
+        if task in self.tasks:
+            self.tasks.remove(task)
 
     def get_tasks(self) -> List[Task]:
-        pass
+        return self.tasks
 
 
 # -------- Owner --------
@@ -34,13 +35,14 @@ class Owner:
     pets: List[Pet] = field(default_factory=list)
 
     def add_pet(self, pet: Pet):
-        pass
+        self.pets.append(pet)
 
     def remove_pet(self, pet: Pet):
-        pass
+        if pet in self.pets:
+            self.pets.remove(pet)
 
     def get_pets(self) -> List[Pet]:
-        pass
+        return self.pets
 
 
 # -------- Scheduler --------
@@ -49,10 +51,11 @@ class Scheduler:
         self.schedule: List[Task] = []
 
     def add_task(self, task: Task):
-        pass
+        self.schedule.append(task)
 
     def sort_by_priority(self) -> List[Task]:
-        pass
+        priority_order = {"high": 1, "medium": 2, "low": 3}
+        return sorted(self.schedule, key=lambda t: priority_order.get(t.priority, 4))
 
     def get_schedule(self) -> List[Task]:
-        pass
+        return self.schedule

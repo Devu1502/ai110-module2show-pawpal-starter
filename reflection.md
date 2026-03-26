@@ -17,8 +17,15 @@ The system has four main classes:
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+The design was slightly updated after reviewing it.
+
+The Scheduler class was made clearer so that it only organizes tasks and does not own them.
+
+Also, task priority was changed to use simple labels like "low", "medium", and "high" instead of numbers to match the user interface.
+
+These changes made the system easier to understand and use.
+
+More advanced improvements such as linking tasks back to pets or adding unique identifiers were considered, but were not implemented to keep the design simple for this project.
 
 ---
 
