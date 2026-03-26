@@ -53,48 +53,71 @@ In Phase 4, I improved the PawPal+ system by adding simple algorithms to make it
 
 These improvements make the scheduler more realistic and helpful for managing pet care tasks.
 
+## Features
+
+- Add and manage multiple pets  
+- Add tasks with duration, priority, and time  
+- Sort tasks automatically by time  
+- Filter tasks by pet and completion status  
+- Detect scheduling conflicts (same time tasks)  
+- Support recurring tasks (daily/weekly)  
+- Automatically create new tasks when recurring tasks are completed  
+- View updated schedule after completing tasks  
+
 ## UML Diagram
 
 ```mermaid
 classDiagram
-    class Owner {
-        +String name
-        +List~Pet~ pets
-        +add_pet(pet: Pet)
-        +remove_pet(pet: Pet)
-        +get_pets() List~Pet~
-    }
 
-    class Pet {
-        +String name
-        +String species
-        +List~Task~ tasks
-        +add_task(task: Task)
-        +remove_task(task: Task)
-        +get_tasks() List~Task~
-    }
+class Task {
+  +title: str
+  +duration_minutes: int
+  +priority: str
+  +time: str
+  +completed: bool
+  +recurrence: str
+  +mark_complete()
+}
 
-    class Task {
-        +String title
-        +int duration_minutes
-        +String priority
-        +String time
-        +bool completed
-        +String recurrence
-        +mark_complete()
-    }
+class Pet {
+  +name: str
+  +species: str
+  +tasks: List
+  +add_task(task)
+  +remove_task(task)
+  +get_tasks()
+}
 
-    class Scheduler {
-        +List~Task~ schedule
-        +add_task(task: Task)
-        +get_schedule() List~Task~
-        +sort_by_time() List~Task~
-        +sort_by_priority() List~Task~
-        +filter_tasks() List~Task~
-        +mark_task_complete(task: Task)
-        +detect_conflicts() List~String~
-    }
+class Owner {
+  +name: str
+  +pets: List
+  +add_pet(pet)
+  +remove_pet(pet)
+  +get_pets()
+}
 
-    Owner "1" --> "0..*" Pet : owns
-    Pet "1" --> "0..*" Task : has
-    Scheduler "1" --> "0..*" Task : organizes
+class Scheduler {
+  +schedule: List
+  +add_task(task)
+  +get_schedule()
+  +sort_by_time()
+  +sort_by_priority()
+  +filter_tasks()
+  +mark_task_complete(task)
+  +detect_conflicts()
+}
+
+Owner --> Pet : owns
+Pet --> Task : has
+Scheduler --> Task : manages
+```
+---
+## Demo
+
+![PawPal App](PawPal.png)
+
+## Testing
+
+Run tests using:
+
+python3 -m unittest discover tests

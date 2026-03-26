@@ -34,6 +34,7 @@ More advanced improvements such as linking tasks back to pets or adding unique i
 **a. Constraints and priorities**
 
 The scheduler considers time and priority as the main constraints. Tasks are sorted by time so they appear in the correct order, and priority is used to rank tasks when needed. I chose time as the most important constraint because a schedule should follow a clear timeline. Priority is secondary and helps organize tasks when multiple tasks exist.
+The sorting is implemented using Python’s built-in sorted function with datetime parsing, which ensures tasks are ordered correctly by time.
 
 **b. Tradeoffs**
 
@@ -45,52 +46,52 @@ The scheduler uses a simple conflict detection strategy that only checks if two 
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I used AI tools mainly for debugging, writing tests, and improving my design. I asked questions like how to test sorting, how to handle recurring tasks, and what edge cases I should consider. AI also helped me generate test cases and fix errors when my code was not working.
+The most helpful prompts were asking for test plans and asking why certain errors were happening, because it helped me understand my own code better.
+This helped me not only fix issues but also understand why the system behaves the way it does.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+One moment where I did not accept AI suggestions directly was when the test code used the wrong method for marking tasks complete. AI suggested calling task.mark_complete(self.scheduler), but in my actual code the correct method was scheduler.mark_task_complete(task).
+I verified this by checking my pawpal_system.py file and comparing it with the test. This helped me fix the tests correctly and understand how my system actually works.
 
 ---
 
 ## 4. Testing and Verification
 
-**b. Test plan**
+**a. Test plan**
 
 I focused on testing both normal functionality and edge cases across the scheduler system:
-Recurring Tasks
-Ensure new tasks are created when recurring tasks are completed
-Verify behavior for daily, weekly, and non-recurring tasks
-Handle repeated completion of the same task
-Conflict Detection
-Detect tasks scheduled at the same time
-Ensure multiple conflicts are correctly identified
-Verify no false conflicts when tasks do not overlap
-Sorting
-Verify tasks are sorted correctly by time
-Handle identical timestamps and invalid priority values
-Ensure sorting works on empty schedules
-Filtering
-Filter tasks by pet name and completion status
-Handle non-existent pets and empty results
-Ensure filtering does not modify the original schedule
-Data Integrity
-Validate task time format
-Ensure tasks are associated with the correct pet
-Handle duplicate pet names safely
+** Recurring Tasks **
+- Ensure new tasks are created when recurring tasks are completed
+- Verify behavior for daily, weekly, and non-recurring tasks
+- Handle repeated completion of the same task
+
+** Conflict Detection **
+- Detect tasks scheduled at the same time
+- Ensure multiple conflicts are correctly identified
+- Verify no false conflicts when tasks do not overlap
+
+** Sorting **
+- Verify tasks are sorted correctly by time
+- Handle identical timestamps and invalid priority values
+- Ensure sorting works on empty schedules
+
+** Filtering **
+- Filter tasks by pet name and completion status
+- Handle non-existent pets and empty results
+- Ensure filtering does not modify the original schedule
+
+** Data Integrity **
+- Validate task time format
+- Ensure tasks are associated with the correct pet
+- Handle duplicate pet names safely
 
 **b. What you tested**
 
-The test suite verifies the core functionality of the PawPal+ system:
-Sorting: Ensures tasks are ordered correctly by time
-Recurrence Logic: Confirms recurring tasks generate new tasks when completed
-Conflict Detection: Detects tasks scheduled at the same time
-Task Completion: Verifies tasks are marked as completed correctly
-Pet-Task Assignment: Ensures tasks are properly linked to pets
+I tested the core functionality of the system by checking sorting, recurring tasks, and conflict detection. I verified that tasks are ordered correctly, new tasks are created for recurring events, and conflicts are detected when tasks have the same time. I also checked that tasks are correctly linked to pets.
 
-**b. Confidence**
+**c. Confidence**
 
 (4/5)
 The system performs reliably for core features such as scheduling, sorting, recurrence, and conflict detection.
@@ -102,14 +103,16 @@ Some limitations remain, such as recurrence not fully accounting for date differ
 
 **a. What went well**
 
-- What part of this project are you most satisfied with?
+The part I am most satisfied with is getting the full system working together, including sorting, filtering, recurring tasks, and conflict detection and also seeing the website come together and using it. I was also able to successfully write tests and fix multiple errors, which helped me confirm that the system works correctly.
 
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
+
 If I had another iteration, I would improve the system by supporting full date and time tracking instead of just time, and detecting overlapping tasks based on duration instead of only exact matches. I would also improve the user interface to allow users to input task times directly.
 
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
 
+One important thing I learned is that designing a system step by step is very important. Starting with a clear structure (UML) made it easier to build the code. I also learned that AI is helpful, but you still need to verify everything yourself and make sure it matches your actual implementation.
