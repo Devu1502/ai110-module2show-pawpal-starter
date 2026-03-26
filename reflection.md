@@ -57,13 +57,44 @@ The scheduler uses a simple conflict detection strategy that only checks if two 
 
 ## 4. Testing and Verification
 
-**a. What you tested**
+**b. Test plan**
 
-I tested sorting by adding tasks in random order and checking if they were displayed correctly. I tested filtering by showing tasks for a specific pet and by completion status. I tested recurring tasks by marking a task as complete and verifying that a new task was automatically created. I also tested conflict detection by creating two tasks at the same time and confirming that a warning was displayed.
+I focused on testing both normal functionality and edge cases across the scheduler system:
+Recurring Tasks
+Ensure new tasks are created when recurring tasks are completed
+Verify behavior for daily, weekly, and non-recurring tasks
+Handle repeated completion of the same task
+Conflict Detection
+Detect tasks scheduled at the same time
+Ensure multiple conflicts are correctly identified
+Verify no false conflicts when tasks do not overlap
+Sorting
+Verify tasks are sorted correctly by time
+Handle identical timestamps and invalid priority values
+Ensure sorting works on empty schedules
+Filtering
+Filter tasks by pet name and completion status
+Handle non-existent pets and empty results
+Ensure filtering does not modify the original schedule
+Data Integrity
+Validate task time format
+Ensure tasks are associated with the correct pet
+Handle duplicate pet names safely
+
+**b. What you tested**
+
+The test suite verifies the core functionality of the PawPal+ system:
+Sorting: Ensures tasks are ordered correctly by time
+Recurrence Logic: Confirms recurring tasks generate new tasks when completed
+Conflict Detection: Detects tasks scheduled at the same time
+Task Completion: Verifies tasks are marked as completed correctly
+Pet-Task Assignment: Ensures tasks are properly linked to pets
 
 **b. Confidence**
 
-I am confident that the scheduler works correctly for the main features such as sorting, filtering, recurring tasks, and conflict detection. If I had more time, I would test edge cases such as invalid time formats, multiple overlapping tasks, and handling large numbers of tasks.
+(4/5)
+The system performs reliably for core features such as scheduling, sorting, recurrence, and conflict detection.
+Some limitations remain, such as recurrence not fully accounting for date differences and conflict detection only checking exact time matches.
 
 ---
 
